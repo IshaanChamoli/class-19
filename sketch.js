@@ -4,6 +4,7 @@ var ground, invisibleGround, groundImage, gamestate= 0;
 var cloudsGroup, cloudImage;
 var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6;
 var gameOverImage,gameOver, restartImage, restart ;
+var checkpointsound, diesound, jumpsound ;
 
 var score;
 
@@ -19,6 +20,10 @@ function preload(){
   cloudImage = loadImage("cloud.png");
   
   restartImage = loadImage("restart.png")
+  
+  checkpointsound = loadSound ("checkpoint.mp3")
+  diesound = loadSound ("die.mp3")
+  jumpsound = loadSound ("jump.mp3")
   
   obstacle1 = loadImage("obstacle1.png");
   obstacle2 = loadImage("obstacle2.png");
@@ -71,7 +76,12 @@ function draw() {
     
     if(keyDown("space")) {
     trex.velocityY = -10;
+    play jumpsound ;
   }
+    
+    if (score % 100===0){
+      play checkpointsound ;
+    }
   
   trex.velocityY = trex.velocityY + 0.8
   
@@ -84,7 +94,7 @@ function draw() {
   spawnObstacles();
   
   if (trex.isTouching(obstaclesGroup) ) {
-  
+  play diesound ;
   gamestate= 1 ;
   
   }
